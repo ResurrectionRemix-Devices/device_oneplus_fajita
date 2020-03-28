@@ -411,4 +411,7 @@
     <!-- Radius of the software rounded corners at the bottom of the display
          in its natural orientation. If zero, the value of rounded_corner_radius is used. -->
     <dimen name="rounded_corner_radius_bottom">100px</dimen>
+
+    <!-- If face auth sends the user directly to home/last open app, or stays on keyguard -->
+    <bool name="config_faceAuthDismissesKeyguard">false</bool>
 </resources>
