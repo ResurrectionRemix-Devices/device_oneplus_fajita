@@ -46,6 +46,9 @@ PRODUCT_PACKAGES += \
     vendor.oneplus.fingerprint.extension@1.0 \
     vendor.oneplus.hardware.display@1.0
 
+#FOD ANIMATIONS
+EXTRA_FOD_ANIMATIONS := true
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     device/oneplus/common
