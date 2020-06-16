@@ -33,6 +33,9 @@
 #define OP_DISPLAY_NOTIFY_PRESS 9
 #define OP_DISPLAY_SET_DIM 10
 
+#define HBM_OFF_DELAY 0
+#define HBM_ON_DELAY 0
+
 namespace vendor {
 namespace lineage {
 namespace biometrics {
@@ -79,14 +82,12 @@ Return<void> FingerprintInscreen::onFinishEnroll() {
 }
 
 Return<void> FingerprintInscreen::onPress() {
-    this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 1);
     this->mVendorDisplayService->setMode(OP_DISPLAY_NOTIFY_PRESS, 1);
 
     return Void();
 }
 
 Return<void> FingerprintInscreen::onRelease() {
-    this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 0);
     this->mVendorDisplayService->setMode(OP_DISPLAY_NOTIFY_PRESS, 0);
 
     return Void();
@@ -103,7 +104,6 @@ Return<void> FingerprintInscreen::onShowFODView() {
 
 Return<void> FingerprintInscreen::onHideFODView() {
     this->mFodCircleVisible = false;
-    this->mVendorDisplayService->setMode(OP_DISPLAY_AOD_MODE, 0);
     this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 0);
     this->mVendorDisplayService->setMode(OP_DISPLAY_NOTIFY_PRESS, 0);
 
@@ -154,8 +154,21 @@ Return<void> FingerprintInscreen::setLongPressEnabled(bool enabled) {
     return Void();
 }
 
-Return<int32_t> FingerprintInscreen::getDimAmount(int32_t) {
-    return 0;
+Return<int32_t> FingerprintInscreen::getDimAmount(int32_t brightness) {
+    int dimAmount;
+    float alpha;
+    int realBrightness = brightness * 2047 / 255;
+
+    if (realBrightness > 500) {
+        alpha = 1.0 - pow(realBrightness / 2047.0 * 430.0 / 600.0, 0.455);
+    } else {
+        alpha = 1.0 - pow(realBrightness / 1680.0, 0.455);
+    }
+    dimAmount = 255 * alpha;
+
+    LOG(INFO) << "dimAmount = " << dimAmount;
+
+    return dimAmount;
 }
 
 Return<bool> FingerprintInscreen::shouldBoostBrightness() {
@@ -184,24 +197,30 @@ Return<int32_t> FingerprintInscreen::getSize() {
 }
 
 Return<int32_t> FingerprintInscreen::getHbmOffDelay() {
-    return 0;
+    return HBM_OFF_DELAY;
 }
 
 Return<int32_t> FingerprintInscreen::getHbmOnDelay() {
-    return 0;
+    return HBM_ON_DELAY;
 }
 
 Return<bool> FingerprintInscreen::supportsAlwaysOnHBM() {
-    return false;
-}
-
-Return<void> FingerprintInscreen::switchHbm(bool) {
-    return Void();
+    return true;
 }
 
 Return<bool> FingerprintInscreen::noDim() {
     return true;
 }
+
+Return<void> FingerprintInscreen::switchHbm(bool enabled) {
+    if (enabled) {
+        this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 1);
+    } else {
+        this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 0);
+    }
+    return Void();
+}
+
 
 }  // namespace implementation
 }  // namespace V1_1
