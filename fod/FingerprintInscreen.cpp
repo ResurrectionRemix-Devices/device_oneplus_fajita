@@ -199,6 +199,10 @@ Return<void> FingerprintInscreen::switchHbm(bool) {
     return Void();
 }
 
+Return<bool> FingerprintInscreen::noDim() {
+    return true;
+}
+
 }  // namespace implementation
 }  // namespace V1_1
 }  // namespace inscreen
