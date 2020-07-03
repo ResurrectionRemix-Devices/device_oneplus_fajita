@@ -4,8 +4,8 @@
     "target_path" : "device/oneplus/sdm845-common"
   },
   {
-    "repository"  : "device_twrp",
-    "target_path" : "device/twrp/fajita",
+    "repository"  : "device_twrp_black",
+    "target_path" : "device/twrp/black/fajita",
     "branch"      : "fajita",
     "clone-depth" : "1"
   }
