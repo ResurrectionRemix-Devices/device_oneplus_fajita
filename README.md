@@ -23,7 +23,9 @@ Copyright 2018 - The LineageOS Project.
 ## Build instructions
 
 ```
-# Compiling
+$ cd packages/apps/Settings && git fetch --all && git cherry-pick 24551c50223cbccd8fd74f053463f99e38ee93d8
+$ cd ../../../ && cd frameworks/base && git fetch --all && git cherry-pick b27490b437a1bc2a767af6d0dd8a30aae96036f0
+$ cd ../../
 $ lunch rr_fajita-userdebug (this will auto pull all dependencies)
 $ export TARGET_SHIPS_X=true (where X is the desired addition. e.g TARGET_SHIPS_GCAM=true) 
 $ m[ake|ka] bacon -jx (where x is the number of jobs to run on parallel threads)
