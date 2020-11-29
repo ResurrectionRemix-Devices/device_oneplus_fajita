@@ -29,7 +29,9 @@ TARGET_SURFACEFLINGER_FOD_LIB := //$(DEVICE_PATH):libfod_extension.oneplus_fajit
 DEVICE_FRAMEWORK_MANIFEST_FILE += $(DEVICE_PATH)/framework_manifest.xml
 
 # Prebuilt Recovery
+ifeq ($(TARGET_SHIPS_RR_TWRP),true)
 TARGET_PREBUILT_RECOVERY_RAMDISK_CPIO := recovery/rr/twrp/device/oneplus/fajita/ramdisk-recovery.cpio
+endif
 
 # inherit from the proprietary version
 -include vendor/oneplus/fajita/BoardConfigVendor.mk
