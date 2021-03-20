@@ -18,7 +18,7 @@ It was released in November 2018.
 
 Copyright 2018 - The LineageOS Project.
 
-![OnePlus 6T](https://cdn2.gsmarena.com/vv/pics/oneplus/oneplus-6t-thunder-purple-1.jpg "OnePlus 6T")
+![OnePlus 6T](https://gzhls.at/i/58/17/1915817-n0.jpg "OnePlus 6T")
 
 ## Build instructions
 
